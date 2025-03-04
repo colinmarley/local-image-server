@@ -1,0 +1,9 @@
+version: '3'
+services:
+  image-server:
+    build: .
+    volumes:
+      - ${DATA_DIR}:/images
+    ports:
+      - "8082:8082"
+    restart: always
