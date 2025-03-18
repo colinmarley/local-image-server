@@ -2,7 +2,11 @@ from fastapi import FastAPI, Query, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from upload_images import router as upload_router  # Import the router
+
+
 import os
+from datetime import datetime
 
 app = FastAPI()
 
@@ -17,6 +21,9 @@ app.add_middleware(
  
 app.mount("/images", StaticFiles(directory="/images"), name='images')
 
+# Include the upload route from upload.py
+app.include_router(upload_router)
+
 @app.get("/search")
 async def search_images(query: str = Query(..., min_length=1)):
     image_dir = "/images"
@@ -24,8 +31,17 @@ async def search_images(query: str = Query(..., min_length=1)):
     for root, dirs, files in os.walk(image_dir):
         for file in files:
             print(file)
+            file_path = os.path.join(root, file)
+            parent_folder = os.path.basename(root)
+            last_modified = datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%Y-%m-%d %H:%M:%S')
             if query.lower() in file.lower():
-                matching_files.append(os.path.join(root, file))
+                matching_files.append({
+                    "name": file,
+                    "url": file_path,
+                    "parent_folder": parent_folder,
+                    "size": os.path.getsize(file_path),
+                    "last_modified": last_modified
+                })
     return {"matching_files": matching_files}
 
 @app.get("/list")
@@ -34,9 +50,15 @@ async def list_images():
     image_list = []
     for root, dirs, files in os.walk(image_dir):
         for file in files:
+            file_path = os.path.join(root, file)
+            parent_folder = os.path.basename(root)
+            last_modified = datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%Y-%m-%d %H:%M:%S')
             image_list.append({
                 "name": file,
-                "url": os.path.join(root, file)
+                "url": file_path,
+                "parent_folder": parent_folder,
+                "size": os.path.getsize(file_path),
+                "last_modified": last_modified
             })
     return {"images": image_list}
 

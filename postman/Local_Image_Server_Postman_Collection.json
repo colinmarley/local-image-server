@@ -1,0 +1,133 @@
+{
+  "info": {
+    "name": "Image Server API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search Images",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/search?query=example",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "example"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Images",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/list",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["list"]
+        }
+      }
+    },
+    {
+      "name": "Rename Image",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/rename?current_name=old_image.jpg&new_name=new_image.jpg&subfolder=sleeves",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["rename"],
+          "query": [
+            {
+              "key": "current_name",
+              "value": "old_image.jpg"
+            },
+            {
+              "key": "new_name",
+              "value": "new_image.jpg"
+            },
+            {
+              "key": "subfolder",
+              "value": "sleeves"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Upload Single Image",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "files",
+              "type": "file",
+              "src": "path/to/image1.jpg"
+            },
+            {
+              "key": "save_location",
+              "type": "text",
+              "value": "/images/single"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8082/upload",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["upload"]
+        }
+      }
+    },
+    {
+      "name": "Upload Batch Images",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "files",
+              "type": "file",
+              "src": "path/to/image1.jpg"
+            },
+            {
+              "key": "files",
+              "type": "file",
+              "src": "path/to/image2.jpg"
+            },
+            {
+              "key": "save_location",
+              "type": "text",
+              "value": "/images/batch"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8082/upload",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["upload"]
+        }
+      }
+    }
+  ]
+}
