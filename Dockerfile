@@ -17,6 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application files
 COPY main.py upload_images.py /code/
+COPY classes /code/classes
 
 # Set the default command to run the FastAPI server
 CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8082"]
