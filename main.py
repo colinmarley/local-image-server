@@ -2,7 +2,8 @@ from fastapi import FastAPI, Query, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from upload_images import router as upload_router  # Import the router
+from upload_images import router as upload_router  # Import the upload router
+from opencv_routes import router as opencv_router  # Import the OpenCV router
 from PIL import Image
 import pytesseract
 import os
@@ -28,6 +29,7 @@ app.mount("/images", StaticFiles(directory="/images"), name='images')
 
 # Include the upload route from upload.py
 app.include_router(upload_router)
+app.include_router(opencv_router)
 
 @app.get("/search")
 async def search_images(query: str = Query(..., min_length=1)):
