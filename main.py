@@ -92,6 +92,7 @@ async def rename_image(current_name: str = Query(...), new_name: str = Query(...
 @app.get("/ocr")
 async def perform_ocr(
     image_name: str = Query(..., description="Name of the image file to process"),
+    subfolder: str = Query(None, description="Subfolder to save the output image"),
     lang: str = Query("eng", description="Language for OCR (default: 'eng')")
 ):
     """
@@ -100,6 +101,10 @@ async def perform_ocr(
     # Get language from query parameter (default to English)
     image_dir = "/images"
     image_path = os.path.join(image_dir, image_name)
+    # Check if a subfolder is provided
+    if subfolder:
+        image_path = os.path.join(image_dir, subfolder, image_name)
+        print(image_path)
     # extracted_text = pytesseract.image_to_string(image)
     # extracted_text = pytesseract.image_to_string(image, lang=lang)
 
