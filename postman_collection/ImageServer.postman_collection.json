@@ -1,0 +1,279 @@
+{
+  "info": {
+    "name": "Image Server API",
+    "description": "Postman collection to test the routes in preprocessing_routes.py, opencv_routes.py, and main.py.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Grayscale",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/grayscale?image_name=ANNA_DVD_SLEEVE.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["grayscale"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Thresholding",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/thresholding?image_name=ANNA_DVD_SLEEVE.png&type=adaptive",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["thresholding"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            },
+            {
+              "key": "type",
+              "value": "adaptive"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Remove Noise",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/remove-noise?image_name=ANNA_DVD_SLEEVE.png&type=Median",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["remove-noise"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            },
+            {
+              "key": "type",
+              "value": "Median"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Morphology",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/morphology?image_name=ANNA_DVD_SLEEVE.png&order=1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["morphology"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            },
+            {
+              "key": "order",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Deskew",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/deskew?image_name=ANNA_DVD_SLEEVE.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["deskew"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Invert Colors",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/invert-colors?image_name=ANNA_DVD_SLEEVE.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["invert-colors"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Equalize Histogram",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/equalize-hist?image_name=ANNA_DVD_SLEEVE.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["equalize-hist"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Preprocess for OCR",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/preprocess-for-ocr?image_name=ANNA_DVD_SLEEVE.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["preprocess-for-ocr"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bounding Boxes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/bounding-boxes?image_name=ANNA_DVD_SLEEVE.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["bounding-boxes"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search Images",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/search?query=ANNA",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "ANNA"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Images",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/list",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["list"]
+        }
+      }
+    },
+    {
+      "name": "Rename Image",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/rename?current_name=ANNA_DVD_SLEEVE.png&new_name=ANNA_RENAMED.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["rename"],
+          "query": [
+            {
+              "key": "current_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            },
+            {
+              "key": "new_name",
+              "value": "ANNA_RENAMED.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "OCR",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/ocr?image_name=ANNA_DVD_SLEEVE.png",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["ocr"],
+          "query": [
+            {
+              "key": "image_name",
+              "value": "ANNA_DVD_SLEEVE.png"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

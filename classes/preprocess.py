@@ -1,6 +1,6 @@
 from PIL import Image, ImageFilter, ImageOps
-from opencv import cv2
 import numpy as np
+import cv2
 import os
 import re
 
@@ -42,15 +42,21 @@ def clean_text(text):
 # Tesseract works best with grayscale images. Converting the image to grayscale reduces noise and simplifies processing.
 def convert_to_grayscale(image_path):
     image = cv2.imread(image_path)
+    if image is None:
+        print(f"Failed to load image: {image_path}")
+        raise HTTPException(status_code=400, detail="Failed to load the image. Ensure the file exists and is a valid image.")
     # create preprocessing directory if it doesn't exist
     grayscale_dir = directory_names["grayscale"]
+    os.makedirs(grayscale_dir, exist_ok=True)
     os.makedirs(os.path.dirname(grayscale_dir), exist_ok=True)
     # Convert the image to grayscale
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray_image_path = os.path.join(grayscale_dir, "gray_" + os.path.basename(image_path))
     # Save the grayscale image
     cv2.imwrite(gray_image_path, gray_image)
-    return gray_image
+
+    #return the path of the saved grayscale image
+    return gray_image_path
 
 # Thresholding converts the image to black and white, which helps Tesseract focus on the text.
 def add_thresholding(image_path, type="global"):
@@ -72,7 +78,9 @@ def add_thresholding(image_path, type="global"):
     # Save the thresholded image
     thresholded_image_path = os.path.join(thresholding_dir, "thresh_" + os.path.basename(image_path))
     cv2.imwrite(thresholded_image_path, thresh_image)
-    return thresh_image
+
+    # Return the path of the saved thresholded image
+    return thresholded_image_path
 
 # Removing noise helps clean up the image and improves OCR accuracy:
 def remove_noise(image_path, type="Median"):
@@ -92,7 +100,9 @@ def remove_noise(image_path, type="Median"):
     # Save the processed image
     no_noise_image_path = os.path.join(no_noise_dir, "no_noise_" + os.path.basename(image_path))
     cv2.imwrite(no_noise_image_path, no_noise_image)
-    return no_noise_image
+
+    # Return the path of the saved no noise image
+    return no_noise_image_path
 
 # Morphological operations can help clean up the image further:
 def morphology(image_path, order="1"):
@@ -113,13 +123,15 @@ def morphology(image_path, order="1"):
     # Save the processed image
     morphology_image_path = os.path.join(morphology_dir, "morph_" + os.path.basename(image_path))
     cv2.imwrite(morphology_image_path, morphology_image)
-    return morphology_image
+
+    # Return the path of the saved morphology image
+    return morphology_image_path
 
 # If the text in the image is skewed, deskewing can align it horizontally for better OCR results
 def deskew_image(image_path):
     image = cv2.imread(image_path)
-    # create processing directory if it doesn't exist
-    deskew_dir = directory_names["processing"]
+    # create deskew directory if it doesn't exist
+    deskew_dir = directory_names["deskew"]
     os.makedirs(os.path.dirname(deskew_dir), exist_ok=True)
     # Apply edge detection
     edges = cv2.Canny(image, 50, 150, apertureSize=3)
@@ -140,7 +152,9 @@ def deskew_image(image_path):
     # Save the processed image
     deskewed_image_path = os.path.join(deskew_dir, "deskewed_" + os.path.basename(image_path))
     cv2.imwrite(deskewed_image_path, rotated_image)
-    return rotated_image
+
+    # Return the path of the saved deskewed image
+    return deskewed_image_path
 
 # Edge detection can help highlight text and improve OCR accuracy:
 def edge_detection(image_path):
@@ -153,7 +167,9 @@ def edge_detection(image_path):
     # Save the processed image
     edge_image_path = os.path.join(edge_dir, "edges_" + os.path.basename(image_path))
     cv2.imwrite(edge_image_path, edges)
-    return edges
+
+    # Return the path of the saved edge detection image
+    return edge_image_path
 
 # Contours can help identify text regions in the image:
 def find_contours(image_path):
@@ -173,7 +189,9 @@ def find_contours(image_path):
     # Save the processed image
     contour_image_path = os.path.join(contours_dir, "contours_" + os.path.basename(image_path))
     cv2.imwrite(contour_image_path, contour_image)
-    return contour_image
+
+    # Return the path of the saved contours image
+    return contour_image_path
 
 # Inverting colors can help improve OCR accuracy in some cases:
 # Especially useful for images with light text on a dark background.
@@ -187,7 +205,9 @@ def invert_colors(image_path):
     # Save the processed image
     inverted_image_path = os.path.join(invert_dir, "inverted_" + os.path.basename(image_path))
     cv2.imwrite(inverted_image_path, inverted_image)
-    return inverted_image
+
+    # Return the path of the saved inverted image
+    return inverted_image_path
 
 # Histogram equalization can help improve the contrast of the image:
 def equalize_hist(image_path):
@@ -200,4 +220,6 @@ def equalize_hist(image_path):
     # Save the processed image
     equalized_image_path = os.path.join(equalized_dir, "equalized_" + os.path.basename(image_path))
     cv2.imwrite(equalized_image_path, equalized_image)
-    return equalized_image
+
+    # Return the path of the saved equalized image
+    return equalized_image_path
