@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query, HTTPException, Body
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,6 +8,7 @@ from preprocessing_routes import router as preprocessing_router  # Import the pr
 from PIL import Image
 import pytesseract
 import os
+import json
 from datetime import datetime
 from classes.preprocess import preprocess_image, clean_text  # Import the preprocess function
 from classes.categorize import categorize_text  # Import the categorize function
@@ -167,3 +168,31 @@ async def perform_ocr(
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to process the image: {str(e)}")
+
+@app.post("/save_annotations")
+async def save_annotations(annotation: dict = Body(...)):
+    """
+    Save bounding box annotation data sent from the UI.
+    Expects JSON body: {"imageName": str, "x": int, "y": int, "width": int, "height": int}
+    Appends the annotation to a JSON file (annotations.json) in the /images directory.
+    """
+    annotations_path = os.path.join("/images", "annotations.json")
+    # Load existing annotations if file exists
+    if os.path.exists(annotations_path):
+        with open(annotations_path, "r", encoding="utf-8") as f:
+            try:
+                annotations = json.load(f)
+            except Exception:
+                annotations = []
+    else:
+        annotations = []
+
+    # Add timestamp to annotation
+    annotation["timestamp"] = datetime.now().isoformat()
+    annotations.append(annotation)
+
+    # Save back to file
+    with open(annotations_path, "w", encoding="utf-8") as f:
+        json.dump(annotations, f, indent=2)
+
+    return {"message": "Annotation saved successfully", "annotation": annotation}

@@ -1,7 +1,10 @@
 fastapi
 uvicorn
+matplotlib
 numpy
 opencv-python
 Pillow
 python-multipart
 pytesseract
+torch
+torchvision

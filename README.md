@@ -44,6 +44,19 @@ A repo to hold code for the medium article on how to create an easy image server
    -F "save_location=/images/batch"
    ```
    
+6. **PaddleOCR Example**
+   Example Request
+   You can use curl to test the /ocr_paddle endpoint:
+
+   ```sh
+   curl -X GET "http://localhost:8082/ocr_paddle?image_name=ANNA_DVD_SLEEVE.png"
+   ```
+
+   If the image is in a subfolder, for example, `processed`:
+   ```sh
+   curl -X GET "http://localhost:8082/ocr_paddle?image_name=processed_timestamp_your_image.png&subfolder=processed"
+   ```
+
    This implementation allows users to upload single or multiple images and specify the directory where they should be saved.
 
 ## Notes
